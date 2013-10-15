@@ -2,4 +2,5 @@
 <resources>
 <color name="dark">#3D3D3D</color>
 <color name="light">#1F1F1F</color>
+<color name="text">#FFFFFF</color>
 </resources>
