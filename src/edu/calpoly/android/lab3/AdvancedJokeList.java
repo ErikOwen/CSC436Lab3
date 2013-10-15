@@ -93,27 +93,7 @@ public class AdvancedJokeList extends Activity {
 	 * Method is used to encapsulate the code that initializes and sets the
 	 * Layout for this Activity.
 	 */
-	protected void initLayout() {
-		/*this.m_vwJokeLayout = new LinearLayout(this);
-		this.m_vwJokeLayout.setOrientation(LinearLayout.VERTICAL);
-		ScrollView sv = new ScrollView(this);
-		sv.addView(this.m_vwJokeLayout);
-		
-		LinearLayout vertLinLayout = new LinearLayout(this);
-		vertLinLayout.setOrientation(LinearLayout.VERTICAL);
-		LinearLayout horLinLayout = new LinearLayout(this);
-		horLinLayout.setOrientation(LinearLayout.HORIZONTAL);
-		this.m_vwJokeButton = new Button(this);
-		this.m_vwJokeButton.setText("Add Joke");
-		horLinLayout.addView(m_vwJokeButton);
-		this.m_vwJokeEditText = new EditText(this);
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		this.m_vwJokeEditText.setLayoutParams(layoutParams);
-		horLinLayout.addView(this.m_vwJokeEditText);
-		vertLinLayout.addView(horLinLayout);
-		vertLinLayout.addView(sv);
-		setContentView(vertLinLayout);*/
-		
+	protected void initLayout() {		
 		setContentView(R.layout.advanced);
 		this.m_vwJokeEditText = (EditText) findViewById(R.id.newJokeEditText);
 		this.m_vwJokeButton = (Button) findViewById(R.id.addJokeButton);
@@ -167,20 +147,7 @@ public class AdvancedJokeList extends Activity {
 	 */
 	protected void addJoke(Joke joke) {
 		this.m_arrJokeList.add(joke);
-		/*TextView tv = new TextView(this);
-		tv.setText(joke.toString());
-		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, 24);
-		tv.setTextColor(this.m_nTextColor);
-		if (this.m_nLastColorUsed == this.m_nDarkColor) {
-		tv.setBackgroundColor(this.m_nLightColor);
-		this.m_nLastColorUsed = this.m_nLightColor;
-		}
-		else {
-			tv.setBackgroundColor(this.m_nDarkColor);
-			this.m_nLastColorUsed = this.m_nDarkColor;
-		}
 
-		this.m_vwJokeLayout.addView(tv);*/
 		this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}
 }

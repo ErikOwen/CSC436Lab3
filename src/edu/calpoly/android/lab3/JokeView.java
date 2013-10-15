@@ -34,28 +34,12 @@ public class JokeView extends LinearLayout implements RadioGroup.OnCheckedChange
 	 * 			  The Joke this view is responsible for displaying.
 	 */
 	public JokeView(Context context, Joke joke) {
-		/*super(context);
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.joke_view, this, true);
-		
-		this.m_vwLikeButton = (RadioButton) findViewById(R.id.likeButton);
-		this.m_vwDislikeButton = (RadioButton) findViewById(R.id.dislikeButton);
-		this.m_vwLikeGroup = (RadioGroup) findViewById(R.id.jokeListViewGroup);
-		this.m_vwJokeText = (TextView) findViewById(R.id.jokeTextView);
-		
-		this.setJoke(joke);
-		requestLayout();
-		
-		this.m_vwLikeGroup.setOnCheckedChangeListener(this);*/
 		super(context);
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.joke_view, this, true);
 		this.m_vwLikeButton = (RadioButton) findViewById(R.id.likeButton);
 		this.m_vwDislikeButton = (RadioButton) findViewById(R.id.dislikeButton);
-		//trying this (not original)
 		this.m_vwLikeGroup = (RadioGroup) findViewById(R.id.ratingRadioGroup);
-		//below could be error (original)
-		//this.m_vwLikeGroup = (RadioGroup) findViewById(R.id.jokeListViewGroup);
 		this.m_vwJokeText = (TextView) findViewById(R.id.jokeTextView);
 		this.m_joke = joke;
 		this.m_vwJokeText.setText(this.m_joke.getJoke());
