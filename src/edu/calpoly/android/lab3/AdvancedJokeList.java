@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -35,7 +36,7 @@ public class AdvancedJokeList extends Activity {
 	protected JokeListAdapter m_jokeAdapter;
 
 	/** ViewGroup used for maintaining a list of Views that each display Jokes. */
-	protected LinearLayout m_vwJokeLayout;
+	protected ListView m_vwJokeLayout;
 
 	/** EditText used for entering text for a new Joke to be added to m_arrJokeList. */
 	protected EditText m_vwJokeEditText;
@@ -68,15 +69,20 @@ public class AdvancedJokeList extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.initLayout();
-		this.initAddJokeListeners();
+		//this.initLayout();
+		//this.initAddJokeListeners();
 		Resources resource = this.getResources();
 		this.m_nLastColorUsed = this.m_nDarkColor = resource.getColor(R.color.dark);
 		this.m_nLightColor = resource.getColor(R.color.light);
 		this.m_nTextColor = resource.getColor(R.color.text);
 		this.m_arrJokeList = new ArrayList<Joke>();
+		this.m_jokeAdapter = new JokeListAdapter(this, this.m_arrJokeList);
 		this.m_strAuthorName = resource.getString(R.string.author_name);
 		String [] jokeListStrings = resource.getStringArray(R.array.jokeList);
+		
+		this.initLayout();
+		this.initAddJokeListeners();
+		
 		for(String jokeString : jokeListStrings) {
 			Log.d("lab2ejowen", "Adding new joke: " + jokeString);
 			this.addJoke(new Joke(jokeString, this.m_strAuthorName));
@@ -97,7 +103,8 @@ public class AdvancedJokeList extends Activity {
 		setContentView(R.layout.advanced);
 		this.m_vwJokeEditText = (EditText) findViewById(R.id.newJokeEditText);
 		this.m_vwJokeButton = (Button) findViewById(R.id.addJokeButton);
-		this.m_vwJokeLayout = (LinearLayout) findViewById(R.id.jokeListViewGroup);
+		this.m_vwJokeLayout = (ListView) findViewById(R.id.jokeListViewGroup);
+		this.m_vwJokeLayout.setAdapter(this.m_jokeAdapter);
 	}
 
 	/**
@@ -147,7 +154,7 @@ public class AdvancedJokeList extends Activity {
 	 */
 	protected void addJoke(Joke joke) {
 		this.m_arrJokeList.add(joke);
-
-		this.m_vwJokeLayout.addView(new JokeView(this, joke));
+		this.m_jokeAdapter.notifyDataSetChanged();
+		//this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}
 }
