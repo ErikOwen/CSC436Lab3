@@ -3,11 +3,22 @@ package edu.calpoly.android.lab3;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class AdvancedJokeList extends Activity {
 
@@ -40,6 +51,7 @@ public class AdvancedJokeList extends Activity {
 	 *  of Jokes. Add a third for text color if necessary. */
 	protected int m_nDarkColor;
 	protected int m_nLightColor;
+	protected int m_nTextColor;
 		
 	/**
 	 * Context-Menu MenuItem IDs.
@@ -55,7 +67,18 @@ public class AdvancedJokeList extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO
+		this.initLayout();
+		this.initAddJokeListeners();
+		Resources resource = this.getResources();
+		this.m_nDarkColor = resource.getColor(R.color.dark);
+		this.m_nLightColor = resource.getColor(R.color.light);
+		this.m_nTextColor = resource.getColor(R.color.text);
+		this.m_arrJokeList = new ArrayList<Joke>();
+		String [] jokeListStrings = resource.getStringArray(R.array.jokeList);
+		for(String jokeString : jokeListStrings) {
+			Log.d("lab2ejowen", "Adding new joke: " + jokeString);
+			this.addJoke(new Joke(jokeString, this.m_strAuthorName));
+		}
 	}
 	
 	@Override
@@ -69,7 +92,26 @@ public class AdvancedJokeList extends Activity {
 	 * Layout for this Activity.
 	 */
 	protected void initLayout() {
-		// TODO
+		this.m_vwJokeLayout = new LinearLayout(this);
+		this.m_vwJokeLayout.setOrientation(LinearLayout.VERTICAL);
+		ScrollView sv = new ScrollView(this);
+		sv.addView(this.m_vwJokeLayout);
+		
+		LinearLayout vertLinLayout = new LinearLayout(this);
+		vertLinLayout.setOrientation(LinearLayout.VERTICAL);
+		LinearLayout horLinLayout = new LinearLayout(this);
+		horLinLayout.setOrientation(LinearLayout.HORIZONTAL);
+		this.m_vwJokeButton = new Button(this);
+		this.m_vwJokeButton.setText("Add Joke");
+		horLinLayout.addView(m_vwJokeButton);
+		this.m_vwJokeEditText = new EditText(this);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		this.m_vwJokeEditText.setLayoutParams(layoutParams);
+		horLinLayout.addView(this.m_vwJokeEditText);
+		vertLinLayout.addView(horLinLayout);
+		vertLinLayout.addView(sv);
+		
+		setContentView(vertLinLayout);
 	}
 
 	/**
@@ -78,7 +120,36 @@ public class AdvancedJokeList extends Activity {
 	 * list.
 	 */
 	protected void initAddJokeListeners() {
-		// TODO
+		m_vwJokeEditText.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View view, int keyCode, KeyEvent event) {
+				if(event.getAction() == KeyEvent.ACTION_DOWN) {
+					if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+						String userJoke = m_vwJokeEditText.getText().toString();
+						if(!userJoke.isEmpty() && !userJoke.equals(null)) {
+							m_vwJokeEditText.setText("");
+							addJoke(new Joke(userJoke, m_strAuthorName));
+							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(m_vwJokeEditText.getWindowToken(), 0);
+						}
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		
+		m_vwJokeButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				String userJoke = m_vwJokeEditText.getText().toString();
+				if(!userJoke.isEmpty() && !userJoke.equals(null)) {
+					m_vwJokeEditText.setText("");
+					addJoke(new Joke(userJoke, m_strAuthorName));
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(m_vwJokeEditText.getWindowToken(), 0);
+				}
+			}
+		});
 	}
 
 	/**
@@ -89,6 +160,12 @@ public class AdvancedJokeList extends Activity {
 	 *            The Joke to add to list of Jokes.
 	 */
 	protected void addJoke(Joke joke) {
-		// TODO
+		this.m_arrJokeList.add(joke);
+		TextView tv = new TextView(this);
+		tv.setText(joke.toString());
+		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, 24);
+		tv.setTextColor(this.m_nTextColor);
+
+		this.m_vwJokeLayout.addView(tv);
 	}
 }
