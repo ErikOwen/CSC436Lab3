@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> 
 	<!-- You must fill in the author_name string resource with your Cal Poly username. -->
-	<string name="author_name">jsmith</string>
+	<string name="author_name">eowen</string>
     <string name="app_name">JokeList</string> 
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Joke List</string>

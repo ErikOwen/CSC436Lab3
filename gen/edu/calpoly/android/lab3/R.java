@@ -19,18 +19,24 @@ public final class R {
         public static final int text=0x7f040002;
     }
     public static final class drawable {
-        public static final int ic_action_emo_err=0x7f020000;
-        public static final int ic_action_emo_err_deselected=0x7f020001;
-        public static final int ic_action_emo_laugh=0x7f020002;
-        public static final int ic_action_emo_laugh_deselected=0x7f020003;
-        public static final int ic_action_search=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int dislike=0x7f020000;
+        public static final int ic_action_emo_err=0x7f020001;
+        public static final int ic_action_emo_err_deselected=0x7f020002;
+        public static final int ic_action_emo_laugh=0x7f020003;
+        public static final int ic_action_emo_laugh_deselected=0x7f020004;
+        public static final int ic_action_search=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int like=0x7f020007;
     }
     public static final class id {
         public static final int addJokeButton=0x7f080002;
+        public static final int dislikeButton=0x7f080008;
         public static final int horLinLayout=0x7f080001;
         public static final int jokeListViewGroup=0x7f080004;
+        public static final int jokeTextView=0x7f080005;
+        public static final int likeButton=0x7f080007;
         public static final int newJokeEditText=0x7f080003;
+        public static final int ratingRadioGroup=0x7f080006;
         public static final int vertLinLayout=0x7f080000;
     }
     public static final class layout {

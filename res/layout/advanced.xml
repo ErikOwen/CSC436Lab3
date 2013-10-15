@@ -37,7 +37,7 @@ Note: You must use the following id's for this list of UI Components defined in
         	android:hint="@string/editTextHint" >
         </EditText>
     </LinearLayout>
-    <ScrollView 
+    <ScrollView
         android:layout_width="match_parent"
     	android:layout_height="wrap_content">
         <LinearLayout
@@ -45,7 +45,6 @@ Note: You must use the following id's for this list of UI Components defined in
         	android:layout_width="match_parent"
     		android:layout_height="wrap_content"
         	android:orientation="vertical">
-            
         </LinearLayout>
 	</ScrollView>
 </LinearLayout>

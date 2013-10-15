@@ -51,6 +51,7 @@ public class AdvancedJokeList extends Activity {
 	 *  of Jokes. Add a third for text color if necessary. */
 	protected int m_nDarkColor;
 	protected int m_nLightColor;
+	protected int m_nLastColorUsed;
 	protected int m_nTextColor;
 		
 	/**
@@ -70,10 +71,11 @@ public class AdvancedJokeList extends Activity {
 		this.initLayout();
 		this.initAddJokeListeners();
 		Resources resource = this.getResources();
-		this.m_nDarkColor = resource.getColor(R.color.dark);
+		this.m_nLastColorUsed = this.m_nDarkColor = resource.getColor(R.color.dark);
 		this.m_nLightColor = resource.getColor(R.color.light);
 		this.m_nTextColor = resource.getColor(R.color.text);
 		this.m_arrJokeList = new ArrayList<Joke>();
+		this.m_strAuthorName = resource.getString(R.string.author_name);
 		String [] jokeListStrings = resource.getStringArray(R.array.jokeList);
 		for(String jokeString : jokeListStrings) {
 			Log.d("lab2ejowen", "Adding new joke: " + jokeString);
@@ -109,7 +111,9 @@ public class AdvancedJokeList extends Activity {
 		this.m_vwJokeEditText.setLayoutParams(layoutParams);
 		horLinLayout.addView(this.m_vwJokeEditText);
 		vertLinLayout.addView(horLinLayout);
-		vertLinLayout.addView(sv);*/
+		vertLinLayout.addView(sv);
+		setContentView(vertLinLayout);*/
+		
 		setContentView(R.layout.advanced);
 		this.m_vwJokeEditText = (EditText) findViewById(R.id.newJokeEditText);
 		this.m_vwJokeButton = (Button) findViewById(R.id.addJokeButton);
@@ -163,11 +167,20 @@ public class AdvancedJokeList extends Activity {
 	 */
 	protected void addJoke(Joke joke) {
 		this.m_arrJokeList.add(joke);
-		TextView tv = new TextView(this);
+		/*TextView tv = new TextView(this);
 		tv.setText(joke.toString());
 		tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, 24);
 		tv.setTextColor(this.m_nTextColor);
+		if (this.m_nLastColorUsed == this.m_nDarkColor) {
+		tv.setBackgroundColor(this.m_nLightColor);
+		this.m_nLastColorUsed = this.m_nLightColor;
+		}
+		else {
+			tv.setBackgroundColor(this.m_nDarkColor);
+			this.m_nLastColorUsed = this.m_nDarkColor;
+		}
 
-		this.m_vwJokeLayout.addView(tv);
+		this.m_vwJokeLayout.addView(tv);*/
+		this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}
 }
