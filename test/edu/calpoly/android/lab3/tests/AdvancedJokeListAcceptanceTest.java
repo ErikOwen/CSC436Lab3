@@ -19,7 +19,7 @@ import edu.calpoly.android.lab3.tests.FriendClass.FriendClassException;
 
 public class AdvancedJokeListAcceptanceTest extends ActivityInstrumentationTestCase2<AdvancedJokeList> {
 
-	public static final double TEXT_SIZE = 16.0;
+	public static final double TEXT_SIZE = 24.0;
 	
 	private Instrumentation mInstrument = null;
 	
