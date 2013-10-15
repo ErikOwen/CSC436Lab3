@@ -92,7 +92,7 @@ public class AdvancedJokeList extends Activity {
 	 * Layout for this Activity.
 	 */
 	protected void initLayout() {
-		this.m_vwJokeLayout = new LinearLayout(this);
+		/*this.m_vwJokeLayout = new LinearLayout(this);
 		this.m_vwJokeLayout.setOrientation(LinearLayout.VERTICAL);
 		ScrollView sv = new ScrollView(this);
 		sv.addView(this.m_vwJokeLayout);
@@ -109,9 +109,11 @@ public class AdvancedJokeList extends Activity {
 		this.m_vwJokeEditText.setLayoutParams(layoutParams);
 		horLinLayout.addView(this.m_vwJokeEditText);
 		vertLinLayout.addView(horLinLayout);
-		vertLinLayout.addView(sv);
-		
-		setContentView(vertLinLayout);
+		vertLinLayout.addView(sv);*/
+		setContentView(R.layout.advanced);
+		this.m_vwJokeEditText = (EditText) findViewById(R.id.newJokeEditText);
+		this.m_vwJokeButton = (Button) findViewById(R.id.addJokeButton);
+		this.m_vwJokeLayout = (LinearLayout) findViewById(R.id.jokeListViewGroup);
 	}
 
 	/**

@@ -26,16 +26,25 @@ public final class R {
         public static final int ic_action_search=0x7f020004;
         public static final int ic_launcher=0x7f020005;
     }
+    public static final class id {
+        public static final int addJokeButton=0x7f080002;
+        public static final int horLinLayout=0x7f080001;
+        public static final int jokeListViewGroup=0x7f080004;
+        public static final int newJokeEditText=0x7f080003;
+        public static final int vertLinLayout=0x7f080000;
+    }
     public static final class layout {
         public static final int advanced=0x7f030000;
         public static final int joke_view=0x7f030001;
     }
     public static final class string {
+        public static final int addJoke=0x7f05000a;
         public static final int app_name=0x7f050001;
         /**  You must fill in the author_name string resource with your Cal Poly username. 
          */
         public static final int author_name=0x7f050000;
         public static final int dislike_menuitem=0x7f050007;
+        public static final int editTextHint=0x7f05000b;
         public static final int filter_menuitem=0x7f050005;
         public static final int like_menuitem=0x7f050006;
         public static final int menu_settings=0x7f050002;
