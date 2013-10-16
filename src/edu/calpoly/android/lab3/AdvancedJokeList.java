@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuInflater;
 
@@ -25,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AdvancedJokeList extends SherlockActivity {
 
@@ -65,12 +68,12 @@ public class AdvancedJokeList extends SherlockActivity {
 	 * IMPORTANT: You must use these when creating your MenuItems or the tests
 	 * used to grade your submission will fail. These are commented out for now.
 	 */
-	//protected static final int FILTER = Menu.FIRST;
-	//protected static final int FILTER_LIKE = SubMenu.FIRST;
-	//protected static final int FILTER_DISLIKE = SubMenu.FIRST + 1;
-	//protected static final int FILTER_UNRATED = SubMenu.FIRST + 2;
-	//protected static final int FILTER_SHOW_ALL = SubMenu.FIRST + 3;
-
+	protected static final int FILTER = Menu.FIRST;
+	protected static final int FILTER_LIKE = SubMenu.FIRST;
+	protected static final int FILTER_DISLIKE = SubMenu.FIRST + 1;
+	protected static final int FILTER_UNRATED = SubMenu.FIRST + 2;
+	protected static final int FILTER_SHOW_ALL = SubMenu.FIRST + 3;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,7 +84,8 @@ public class AdvancedJokeList extends SherlockActivity {
 		this.m_nLightColor = resource.getColor(R.color.light);
 		this.m_nTextColor = resource.getColor(R.color.text);
 		this.m_arrJokeList = new ArrayList<Joke>();
-		this.m_jokeAdapter = new JokeListAdapter(this, this.m_arrJokeList);
+		this.m_arrFilteredJokeList = new ArrayList<Joke>();
+		this.m_jokeAdapter = new JokeListAdapter(this, this.m_arrFilteredJokeList);
 		this.m_strAuthorName = resource.getString(R.string.author_name);
 		String [] jokeListStrings = resource.getStringArray(R.array.jokeList);
 		
@@ -102,6 +106,53 @@ public class AdvancedJokeList extends SherlockActivity {
 		
         return true;
     }
+	
+	private void filter(int filterType) {
+		for (Joke filteredJoke : this.m_arrFilteredJokeList) {
+			for (Joke allJoke : this.m_arrJokeList) {
+				if (filteredJoke.equals(allJoke)) {
+					allJoke.setRating(filteredJoke.getRating());
+				}
+			}
+		}
+		
+		this.m_arrFilteredJokeList.clear();
+		
+		if (filterType == FILTER_SHOW_ALL) {
+			this.m_arrFilteredJokeList.addAll(m_arrJokeList);
+			Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
+		}
+		else {
+			for (Joke j : this.m_arrJokeList) {
+				if (j.getRating() == filterType) {
+					Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
+					this.m_arrFilteredJokeList.add(j);
+				}
+			}
+		}
+		
+		this.m_jokeAdapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.submenu_like:
+	            this.filter(Joke.LIKE);
+	            return true;
+	        case R.id.submenu_dislike:
+	            this.filter(Joke.DISLIKE);
+	            return true;
+	        case R.id.submenu_unrated:
+	            this.filter(Joke.UNRATED);
+	            return true;
+	        case R.id.submenu_show_all:
+	            this.filter(FILTER_SHOW_ALL);
+	            return true;	            
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 
 	/**
 	 * Method is used to encapsulate the code that initializes and sets the
@@ -162,6 +213,8 @@ public class AdvancedJokeList extends SherlockActivity {
 	 */
 	protected void addJoke(Joke joke) {
 		this.m_arrJokeList.add(joke);
+		//ADDED LINE BELOW, COULD BE WRONG
+		this.m_arrFilteredJokeList.add(joke);
 		this.m_jokeAdapter.notifyDataSetChanged();
 		//this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}

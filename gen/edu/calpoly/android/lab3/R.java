@@ -974,6 +974,10 @@ containing a value of this type.
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
+        public static final int submenu_dislike=0x7f04003d;
+        public static final int submenu_like=0x7f04003c;
+        public static final int submenu_show_all=0x7f04003f;
+        public static final int submenu_unrated=0x7f04003e;
         public static final int tabMode=0x7f040003;
         public static final int useLogo=0x7f040004;
         public static final int vertLinLayout=0x7f040032;

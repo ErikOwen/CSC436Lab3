@@ -40,6 +40,8 @@ public class JokeView extends LinearLayout implements RadioGroup.OnCheckedChange
 		this.m_vwLikeButton = (RadioButton) findViewById(R.id.likeButton);
 		this.m_vwDislikeButton = (RadioButton) findViewById(R.id.dislikeButton);
 		this.m_vwLikeGroup = (RadioGroup) findViewById(R.id.ratingRadioGroup);
+		//JUST ADDED THIS LINE COULD BE WRONG
+		this.m_vwLikeGroup.setOnCheckedChangeListener(this);
 		this.m_vwJokeText = (TextView) findViewById(R.id.jokeTextView);
 		this.m_joke = joke;
 		this.m_vwJokeText.setText(this.m_joke.getJoke());
@@ -90,6 +92,6 @@ public class JokeView extends LinearLayout implements RadioGroup.OnCheckedChange
 		}
 		else {
 			this.m_joke.setRating(Joke.UNRATED);
-		}		
+		}
 	}
 }
