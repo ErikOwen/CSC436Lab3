@@ -79,8 +79,6 @@ public class AdvancedJokeList extends SherlockActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//this.initLayout();
-		//this.initAddJokeListeners();
 		Resources resource = this.getResources();
 		this.m_nLastColorUsed = this.m_nDarkColor = resource.getColor(R.color.dark);
 		this.m_nLightColor = resource.getColor(R.color.light);
@@ -122,12 +120,10 @@ public class AdvancedJokeList extends SherlockActivity {
 		
 		if (filterType == FILTER_SHOW_ALL) {
 			this.m_arrFilteredJokeList.addAll(m_arrJokeList);
-			//Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
 		}
 		else {
 			for (Joke j : this.m_arrJokeList) {
 				if (j.getRating() == filterType) {
-					//Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
 					this.m_arrFilteredJokeList.add(j);
 				}
 			}
@@ -272,10 +268,8 @@ public class AdvancedJokeList extends SherlockActivity {
 	 */
 	protected void addJoke(Joke joke) {
 		this.m_arrJokeList.add(joke);
-		//ADDED LINE BELOW, COULD BE WRONG
 		this.m_arrFilteredJokeList.add(joke);
 		this.m_jokeAdapter.notifyDataSetChanged();
-		//this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}
 	
 }

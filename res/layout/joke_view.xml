@@ -28,7 +28,7 @@ Note: You must use the following id's for this list of UI Components defined in
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:text="Some really long text blah blah blah blah blah blah blah blah blah blah blah blah"
+        android:text="@string/joke"
         android:textSize="24.0px" >
 
     </TextView>

@@ -1066,6 +1066,7 @@ containing a value of this type.
         public static final int dislike_menuitem=0x7f090014;
         public static final int editTextHint=0x7f090018;
         public static final int filter_menuitem=0x7f090012;
+        public static final int joke=0x7f090019;
         public static final int like_menuitem=0x7f090013;
         public static final int menu_settings=0x7f09000f;
         public static final int remove_menuitem=0x7f090011;

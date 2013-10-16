@@ -58,8 +58,6 @@ public class JokeListAdapter extends BaseAdapter{
 		}
 		else {
 			((JokeView)convertView).setJoke(this.m_jokeList.get(position));
-			//view = this.m_context.getClass()((JokeView)this.m_context).setJoke(this.m_jokeList.get(position));
-			//view = (JokeView) this.getItem(position);
 		}
 		return convertView;
 	}
