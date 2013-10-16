@@ -13,4 +13,35 @@ Note: You must use the following id's for this list of UI Components defined in
 	 This Root element is here as a place holder to prevent compilation
      errors.
 -->
-<LinearLayout></LinearLayout>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/vertLinLayout"
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/horLinLayout"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" >
+        <Button 
+            android:id="@+id/addJokeButton"
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+            android:text="@string/addJoke" >
+        </Button>
+        <EditText
+            android:id="@+id/newJokeEditText"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:hint="@string/editTextHint" >
+        </EditText>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/jokeListViewGroup"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+        android:orientation="vertical">
+	</ListView>
+
+</LinearLayout>
