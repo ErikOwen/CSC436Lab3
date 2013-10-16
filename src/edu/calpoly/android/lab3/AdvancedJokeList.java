@@ -26,7 +26,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class AdvancedJokeList extends SherlockActivity implements ActionMode.Callback {
+public class AdvancedJokeList extends SherlockActivity {
 
 	/** Contains the name of the Author for the jokes. */
 	protected String m_strAuthorName;
@@ -73,6 +73,8 @@ public class AdvancedJokeList extends SherlockActivity implements ActionMode.Cal
 	
 	protected com.actionbarsherlock.view.ActionMode actionMode;
 	protected com.actionbarsherlock.view.ActionMode.Callback callBack;
+	
+	protected int deletePosition;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,13 @@ public class AdvancedJokeList extends SherlockActivity implements ActionMode.Cal
 		this.m_jokeAdapter.notifyDataSetChanged();
 	}
 	
+	private void deleteJoke() {
+		this.m_arrJokeList.remove(this.m_arrFilteredJokeList.get(this.deletePosition));
+		this.m_arrFilteredJokeList.remove(this.deletePosition);
+		
+		this.m_jokeAdapter.notifyDataSetChanged();
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -187,8 +196,7 @@ public class AdvancedJokeList extends SherlockActivity implements ActionMode.Cal
 		    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		        switch (item.getItemId()) {
 		            case R.id.menu_remove:
-		                //shareCurrentItem();
-		            	Toast.makeText(getBaseContext(), "Remove button clicked", Toast.LENGTH_LONG).show();
+		            	deleteJoke();
 		                mode.finish(); // Action picked, so close the CAB
 		                return true;
 		            default:
@@ -248,8 +256,7 @@ public class AdvancedJokeList extends SherlockActivity implements ActionMode.Cal
 				/*if (actionMode != null) {
 					return false;
 				}*/
-				
-				Toast.makeText(getApplicationContext(), "Long Clicked " , Toast.LENGTH_SHORT).show();
+				deletePosition = position;
 				actionMode = startActionMode(callBack);
 				return true;
 			}
@@ -269,30 +276,6 @@ public class AdvancedJokeList extends SherlockActivity implements ActionMode.Cal
 		this.m_arrFilteredJokeList.add(joke);
 		this.m_jokeAdapter.notifyDataSetChanged();
 		//this.m_vwJokeLayout.addView(new JokeView(this, joke));
-	}
-
-	@Override
-	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onDestroyActionMode(ActionMode mode) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
