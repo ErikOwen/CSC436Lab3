@@ -2,34 +2,31 @@ package edu.calpoly.android.lab3;
 
 import java.util.ArrayList;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuInflater;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnLongClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class AdvancedJokeList extends SherlockActivity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
+
+public class AdvancedJokeList extends SherlockActivity implements ActionMode.Callback {
 
 	/** Contains the name of the Author for the jokes. */
 	protected String m_strAuthorName;
@@ -73,6 +70,9 @@ public class AdvancedJokeList extends SherlockActivity {
 	protected static final int FILTER_DISLIKE = SubMenu.FIRST + 1;
 	protected static final int FILTER_UNRATED = SubMenu.FIRST + 2;
 	protected static final int FILTER_SHOW_ALL = SubMenu.FIRST + 3;
+	
+	protected com.actionbarsherlock.view.ActionMode actionMode;
+	protected com.actionbarsherlock.view.ActionMode.Callback callBack;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -120,12 +120,12 @@ public class AdvancedJokeList extends SherlockActivity {
 		
 		if (filterType == FILTER_SHOW_ALL) {
 			this.m_arrFilteredJokeList.addAll(m_arrJokeList);
-			Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
 		}
 		else {
 			for (Joke j : this.m_arrJokeList) {
 				if (j.getRating() == filterType) {
-					Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
+					//Toast.makeText(this, "Found a joke in category: " + filterType, Toast.LENGTH_LONG).show();
 					this.m_arrFilteredJokeList.add(j);
 				}
 			}
@@ -164,6 +164,45 @@ public class AdvancedJokeList extends SherlockActivity {
 		this.m_vwJokeButton = (Button) findViewById(R.id.addJokeButton);
 		this.m_vwJokeLayout = (ListView) findViewById(R.id.jokeListViewGroup);
 		this.m_vwJokeLayout.setAdapter(this.m_jokeAdapter);
+		
+		this.callBack = new ActionMode.Callback() {
+		    // Called when the action mode is created; startActionMode() was called
+		    @Override
+		    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+		        // Inflate a menu resource providing context menu items
+		        MenuInflater inflater = mode.getMenuInflater();
+		        inflater.inflate(R.menu.actionmenu, menu);
+		        return true;
+		    }
+
+		    // Called each time the action mode is shown. Always called after onCreateActionMode, but
+		    // may be called multiple times if the mode is invalidated.
+		    @Override
+		    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+		        return false; // Return false if nothing is done
+		    }
+
+		    // Called when the user selects a contextual menu item
+		    @Override
+		    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		        switch (item.getItemId()) {
+		            case R.id.menu_remove:
+		                //shareCurrentItem();
+		            	Toast.makeText(getBaseContext(), "Remove button clicked", Toast.LENGTH_LONG).show();
+		                mode.finish(); // Action picked, so close the CAB
+		                return true;
+		            default:
+		                return false;
+		        }
+		    }
+
+		    // Called when the user exits the action mode
+		    @Override
+		    public void onDestroyActionMode(ActionMode mode) {
+		        //mode = null;
+		    }
+		};
+		
 	}
 
 	/**
@@ -190,7 +229,7 @@ public class AdvancedJokeList extends SherlockActivity {
 				return false;
 			}
 		});
-		
+
 		m_vwJokeButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				String userJoke = m_vwJokeEditText.getText().toString();
@@ -200,6 +239,19 @@ public class AdvancedJokeList extends SherlockActivity {
 					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(m_vwJokeEditText.getWindowToken(), 0);
 				}
+			}
+		});
+		
+		this.m_vwJokeLayout.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				/*if (actionMode != null) {
+					return false;
+				}*/
+				
+				Toast.makeText(getApplicationContext(), "Long Clicked " , Toast.LENGTH_SHORT).show();
+				actionMode = startActionMode(callBack);
+				return true;
 			}
 		});
 	}
@@ -218,4 +270,29 @@ public class AdvancedJokeList extends SherlockActivity {
 		this.m_jokeAdapter.notifyDataSetChanged();
 		//this.m_vwJokeLayout.addView(new JokeView(this, joke));
 	}
+
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
