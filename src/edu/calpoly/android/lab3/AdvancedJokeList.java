@@ -2,6 +2,11 @@ package edu.calpoly.android.lab3;
 
 import java.util.ArrayList;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuInflater;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,7 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -21,7 +26,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class AdvancedJokeList extends Activity {
+public class AdvancedJokeList extends SherlockActivity {
 
 	/** Contains the name of the Author for the jokes. */
 	protected String m_strAuthorName;
@@ -91,7 +96,10 @@ public class AdvancedJokeList extends Activity {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // TODO
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.mainmenu, menu);
+		this.m_vwMenu = menu;
+		
         return true;
     }
 
